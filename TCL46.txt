@@ -1,0 +1,134 @@
+mysql> show tables;
++--------------------+
+| Tables_in_program1 |
++--------------------+
+| class              |
+| sdb                |
+| student            |
++--------------------+
+3 rows in set (0.03 sec)
+
+mysql> desc student
+    -> ;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| s_id         | int          | NO   | PRI | NULL    |       |
+| s_name       | varchar(100) | YES  |     | NULL    |       |
+| s_totalmark  | int          | YES  |     | NULL    |       |
+| s_precentage | int          | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> select *from student;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  101 | AAA    |         406 |           82 |
+|  102 | BBB    |         397 |           76 |
+|  103 | CCC    |         458 |           90 |
+|  104 | DDD    |         350 |           70 |
+|  105 | EEE    |         348 |           70 |
++------+--------+-------------+--------------+
+5 rows in set (0.04 sec)
+
+mysql> desc sdb;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| s_name | varchar(100) | YES  |     | NULL    |       |
+| s_id   | int          | NO   | PRI | NULL    |       |
+| s_mark | int          | YES  |     | NULL    |       |
+| phone  | int          | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> select *from sdb;
++--------+------+--------+-------+
+| s_name | s_id | s_mark | phone |
++--------+------+--------+-------+
+| AAA    |  101 |    460 |  NULL |
+| BBB    |  102 |    300 |  NULL |
+| CCC    |  103 |    400 |  NULL |
+| DDD    |  104 |    350 |  NULL |
+| EEE    |  105 |    250 |  NULL |
++--------+------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc class;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| c_no         | int          | YES  |     | NULL    |       |
+| s_id         | int          | YES  | MUL | NULL    |       |
+| courses_name | varchar(100) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select *from class;
+Empty set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> UPDATE student 
+    -> SET s_totalmark = s_totalmark + 10
+    -> WHERE s_id = 101;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM student WHERE s_id = 101;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  101 | AAA    |         416 |           82 |
++------+--------+-------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SAVEPOINT sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select *from student;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  101 | AAA    |         416 |           82 |
+|  102 | BBB    |         397 |           76 |
+|  103 | CCC    |         458 |           90 |
+|  104 | DDD    |         350 |           70 |
+|  105 | EEE    |         348 |           70 |
++------+--------+-------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE student set s_mark =410 where s_id =101;
+ERROR 1054 (42S22): Unknown column 's_mark' in 'field list'
+mysql> UPDATE student set s_mark = 410 where s_id = 101;
+ERROR 1054 (42S22): Unknown column 's_mark' in 'field list'
+mysql> UPDATE student set s_totalmark = 410 where s_id = 101;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SAVEPOINT sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM student WHERE s_id = 103;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  103 | CCC    |         458 |           90 |
++------+--------+-------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> rollback to  s1;
+ERROR 1305 (42000): SAVEPOINT s1 does not exist
+mysql> UPDATE student set s_totalmark = 310 where s_id = 101;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> rollback to  s1;
+ERROR 1305 (42000): SAVEPOINT s1 does not exist
+mysql> autocommit =1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'autocommit =1' at line 1
