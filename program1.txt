@@ -1,0 +1,351 @@
+mysql> create database program1;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> use program1;
+Database changed
+mysql> create table student(s_id int primary key,s_name varchar(100),s_totalmark int,s_precentage int);
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> insert into student values (101,"AAA",406,82%);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> insert into student values (101,"AAA",406,82);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into student values (102,"BBB",397,76);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into student values (103,"CCC",458,90);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into student values (104,"DDD",350,70);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into student values (105,"EEE",348,70);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from student;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  101 | AAA    |         406 |           82 |
+|  102 | BBB    |         397 |           76 |
+|  103 | CCC    |         458 |           90 |
+|  104 | DDD    |         350 |           70 |
+|  105 | EEE    |         348 |           70 |
++------+--------+-------------+--------------+
+5 rows in set (0.01 sec)
+
+mysql> select*from students where s_totalmark >400;
+ERROR 1146 (42S02): Table 'program1.students' doesn't exist
+mysql> select*from student where s_totalmark >400;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  101 | AAA    |         406 |           82 |
+|  103 | CCC    |         458 |           90 |
++------+--------+-------------+--------------+
+2 rows in set (0.01 sec)
+
+mysql> select*from student where s_totalmark >400;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  101 | AAA    |         406 |           82 |
+|  103 | CCC    |         458 |           90 |
++------+--------+-------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from student where s_totalmark <400;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  102 | BBB    |         397 |           76 |
+|  104 | DDD    |         350 |           70 |
+|  105 | EEE    |         348 |           70 |
++------+--------+-------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select*from student where s_totalmark BETWEEN 300 AND 400;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  102 | BBB    |         397 |           76 |
+|  104 | DDD    |         350 |           70 |
+|  105 | EEE    |         348 |           70 |
++------+--------+-------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select*from student where s_totalmark BETWEEN 300 AND 389;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  104 | DDD    |         350 |           70 |
+|  105 | EEE    |         348 |           70 |
++------+--------+-------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from student where s_precentage IN (70,80);
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  104 | DDD    |         350 |           70 |
+|  105 | EEE    |         348 |           70 |
++------+--------+-------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select s_id,s_name from student where s_totalmark >400;
++------+--------+
+| s_id | s_name |
++------+--------+
+|  101 | AAA    |
+|  103 | CCC    |
++------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select*from student where s_name LIKE 'A%';
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  101 | AAA    |         406 |           82 |
++------+--------+-------------+--------------+
+1 row in set (0.01 sec)
+
+mysql> select*from student where s_name LIKE '__A%';
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  101 | AAA    |         406 |           82 |
++------+--------+-------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select*from student where s_name LIKE '%B%';
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  102 | BBB    |         397 |           76 |
++------+--------+-------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select*from student where s_name LIKE '_A_';
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  101 | AAA    |         406 |           82 |
++------+--------+-------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select*from student where s_name LIKE '%C';
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  103 | CCC    |         458 |           90 |
++------+--------+-------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select*from student where s_totalmark ORDER BY ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select*from student ORDER BY s_totalmark  ;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  105 | EEE    |         348 |           70 |
+|  104 | DDD    |         350 |           70 |
+|  102 | BBB    |         397 |           76 |
+|  101 | AAA    |         406 |           82 |
+|  103 | CCC    |         458 |           90 |
++------+--------+-------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select*from student ORDER BY s_totalmark DESC ;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  103 | CCC    |         458 |           90 |
+|  101 | AAA    |         406 |           82 |
+|  102 | BBB    |         397 |           76 |
+|  104 | DDD    |         350 |           70 |
+|  105 | EEE    |         348 |           70 |
++------+--------+-------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select*from student ORDER BY s_totalmark  LIMIT 2 ;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  105 | EEE    |         348 |           70 |
+|  104 | DDD    |         350 |           70 |
++------+--------+-------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from student ORDER BY s_totalmark DESC LIMIT -2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-2' at line 1
+mysql> select*from student ORDER BY s_totalmark DESC LIMIT 2;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  103 | CCC    |         458 |           90 |
+|  101 | AAA    |         406 |           82 |
++------+--------+-------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from student ORDER BY s_totalmark DESC LIMIT 2 OFFSET 2;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  102 | BBB    |         397 |           76 |
+|  104 | DDD    |         350 |           70 |
++------+--------+-------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from student ORDER BY s_totalmark  LIMIT 2  OFFET 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OFFET 3' at line 1
+mysql> select*from student ORDER BY s_totalmark  LIMIT 2  OFFET 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OFFET 2' at line 1
+mysql> select*from student ORDER BY s_totalmark  ASC LIMIT 2  OFFET 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OFFET 2' at line 1
+mysql> select*from student ORDER BY s_totalmark  ASC ;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  105 | EEE    |         348 |           70 |
+|  104 | DDD    |         350 |           70 |
+|  102 | BBB    |         397 |           76 |
+|  101 | AAA    |         406 |           82 |
+|  103 | CCC    |         458 |           90 |
++------+--------+-------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select*from student ORDER BY s_totalmark  ASC LIMIT 2;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  105 | EEE    |         348 |           70 |
+|  104 | DDD    |         350 |           70 |
++------+--------+-------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from student ORDER BY s_totalmark  ASC LIMIT 4  OFFSET 2;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  102 | BBB    |         397 |           76 |
+|  101 | AAA    |         406 |           82 |
+|  103 | CCC    |         458 |           90 |
++------+--------+-------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select*from student ORDER BY s_totalmark  ASC LIMIT 3 OFFSET 2;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  102 | BBB    |         397 |           76 |
+|  101 | AAA    |         406 |           82 |
+|  103 | CCC    |         458 |           90 |
++------+--------+-------------+--------------+
+3 rows in set (0.01 sec)
+
+mysql> select*from student ORDER BY s_totalmark  ASC LIMIT 2 OFFSET 2;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  102 | BBB    |         397 |           76 |
+|  101 | AAA    |         406 |           82 |
++------+--------+-------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from student ORDER BY s_totalmark  ASC LIMIT 2 OFFSET 3;
++------+--------+-------------+--------------+
+| s_id | s_name | s_totalmark | s_precentage |
++------+--------+-------------+--------------+
+|  101 | AAA    |         406 |           82 |
+|  103 | CCC    |         458 |           90 |
++------+--------+-------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct s_precentage from student;
++--------------+
+| s_precentage |
++--------------+
+|           82 |
+|           76 |
+|           90 |
+|           70 |
++--------------+
+4 rows in set (0.00 sec)
+
+mysql> select count(*) from student;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select count(s_totalmark) from student;
++--------------------+
+| count(s_totalmark) |
++--------------------+
+|                  5 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(s_totalmark) from student;
++------------------+
+| sum(s_totalmark) |
++------------------+
+|             1959 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(s_totalmark,s_percentage) from student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',s_percentage) from student' at line 1
+mysql> select min(s_totalmark) from student;
++------------------+
+| min(s_totalmark) |
++------------------+
+|              348 |
++------------------+
+1 row in set (0.01 sec)
+
+mysql> select max(s_totalmark) as  GREATER MARK from student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MARK from student' at line 1
+mysql> select max(s_totalmark) as  GREATERMARK from student;
++-------------+
+| GREATERMARK |
++-------------+
+|         458 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select min(s_totalmark)  as LOWERMARK from student;
++-----------+
+| LOWERMARK |
++-----------+
+|       348 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> 
+mysql> 
+mysql> select AVG(s_totalmark) AS AVGMARK from student;
++----------+
+| AVGMARK  |
++----------+
+| 391.8000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> insert s_name,s_id from student where avg(s_totalmark); 
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',s_id from student where avg(s_totalmark)' at line 1
+mysql> SELECT s_name, s_id, AVG(s_totalmark) AS avg_mark
+    -> FROM student;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'program1.student.s_name'; this is incompatible with sql_mode=only_full_group_by
+mysql> select max(s_totalmark) as  GREATERMARK from student;
++-------------+
+| GREATERMARK |
++-------------+
+|         458 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> exit
